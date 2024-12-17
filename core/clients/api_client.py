@@ -44,6 +44,5 @@ class ApiClient:
         url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT.value}"
         response = self.session.post(url, headers=headers, data=data, verify=False)
         response.raise_for_status()
-        token = response.json()
         assert response.status_code == 200, f"Expected status code 200 but got {response.status_code}"
-        return response
+        return response.json()
