@@ -28,6 +28,4 @@ def test_admin_authorization_with_empty_data(api_client):
     }
     data = {}  # empty body
     response = api_client.admin_auth_for_test(headers=headers, data=data)
-    status_code = response.status_code()
-    assert status_code == 400
-
+    assert response.status_code == 400
