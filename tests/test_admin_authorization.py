@@ -20,7 +20,14 @@ def test_admin_authorization(api_client):
         AdminAuth(**response)
     except ValidationError as e:
         raise ValidationError(f"Response validation failed: {e}")
-    
-    def test_with_empty_body
-    
-    
+
+
+def test_admin_authorization_with_empty_data(api_client):
+    headers = {
+        'Authorization': 'Basic YXBpLWNsaWVudDpwYXNzd29yZA=='
+    }
+    data = {}  # empty body
+    response = api_client.admin_auth_for_test(headers=headers, data=data)
+    status_code = response.status_code()
+    assert status_code == 400
+
