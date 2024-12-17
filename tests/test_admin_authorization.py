@@ -21,6 +21,6 @@ def test_admin_authorization(api_client):
     except ValidationError as e:
         raise ValidationError(f"Response validation failed: {e}")
     
-    def test_a
+    def test_with_empty_body
     
     
