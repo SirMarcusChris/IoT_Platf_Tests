@@ -17,7 +17,7 @@ def test_admin_authorization(api_client):
 
     response = api_client.admin_auth_for_test(headers=headers, data=data)
     try:
-        AdminAuth(**response)
+        AdminAuth(**response.json())
     except ValidationError as e:
         raise ValidationError(f"Response validation failed: {e}")
 
