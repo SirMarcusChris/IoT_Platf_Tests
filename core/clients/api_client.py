@@ -43,6 +43,6 @@ class ApiClient:
     def admin_auth_for_test(self, headers, data):
         url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT.value}"
         response = self.session.post(url, headers=headers, data=data, verify=False)
-        response.raise_for_status()
-        assert response.status_code == 200, f"Expected status code 200 but got {response.status_code}"
-        return response.json()
+        # response.raise_for_status()
+        # assert response.status_code == 200, f"Expected status code 200 but got {response.status_code}"
+        return response

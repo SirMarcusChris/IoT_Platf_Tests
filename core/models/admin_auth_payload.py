@@ -7,3 +7,9 @@ class AdminAuth(BaseModel):
     token_type: str = "Bearer"
     expires_in: int
 
+class AdminAuthEmptyBody(BaseModel):
+    error_description: str
+    error: str
+    error_uri: str
+
+
