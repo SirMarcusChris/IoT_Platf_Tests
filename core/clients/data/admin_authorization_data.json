@@ -1,0 +1,18 @@
+[
+  {
+    "username": "adminnnnn",
+    "password": "Test18plat34Form",
+    "grant_type": "password"
+  },
+  {
+    "username": "admin",
+    "password": "invalid",
+    "grant_type": "password"
+  },
+  {
+    "username": "admin",
+    "password": "Test18plat34Form",
+    "grant_type": "invalid"
+  }
+]
+

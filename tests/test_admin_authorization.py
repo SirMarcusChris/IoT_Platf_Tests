@@ -5,6 +5,7 @@ import requests
 from pydantic import ValidationError
 from core.models.admin_auth_payload import AdminAuth, AdminAuthEmptyBody
 
+
 def test_admin_authorization(api_client):
     headers = {
         'Authorization': 'Basic YXBpLWNsaWVudDpwYXNzd29yZA=='
@@ -20,18 +21,27 @@ def test_admin_authorization(api_client):
         AdminAuth(**response.json())
     except ValidationError as e:
         raise ValidationError(f"Response validation failed: {e}")
-
     assert response.status_code == 200
+
 
 def test_admin_authorization_with_empty_data(api_client):
     headers = {
         'Authorization': 'Basic YXBpLWNsaWVudDpwYXNzd29yZA=='
     }
-    data = {}  # empty body
+    data = {}  #  empty body
     response = api_client.admin_auth_for_test(headers=headers, data=data)
     try:
         AdminAuthEmptyBody(**response.json())
     except ValidationError as e:
-        raise  ValidationError(f"Response validation failed: {e}")
-
+        raise ValidationError(f"Response validation failed: {e}")
     assert response.status_code == 400
+
+
+def test_authorization_with_bad_login_password(api_client):
+    headers = {
+        'Authorization': 'Basic YXBpLWNsaWVudDpwYXNzd29yZA=='
+    }
+    data = open('/Users/admin/PycharmProjects/WorkTestProject/core/clients/data/admin_authorization_data.json')
+    response = api_client.admin_auth_for_test(headers=headers, data=data)
+    assert response.status_code == 400
+
