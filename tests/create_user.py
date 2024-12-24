@@ -77,7 +77,7 @@ payload = json.dumps({
   },
   "status": "DEFAULT",
   "surname": "",
-  "username": "1122432ss"
+  "username": "1122ssssssss432ss"
 })
 
 
