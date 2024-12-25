@@ -7,7 +7,6 @@ from core.settings.config import Users
 from core.settings.environments import Environment
 from core.clients.endpoints import Endpoints
 
-
 load_dotenv()
 
 
@@ -33,7 +32,7 @@ class ApiClient:
     def admin_auth(self):
         url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT.value}"
         data = {"username": Users.ADMIN_USERNAME.value, "password": Users.ADMIN_PASSWORD.value,
-                   "grant_type": Users.ADMIN_GRANT_TYPE.value}
+                "grant_type": Users.ADMIN_GRANT_TYPE.value}
         headers = {'Authorization': 'Basic YXBpLWNsaWVudDpwYXNzd29yZA=='}
         response = self.session.post(url, data=data, headers=headers, verify=False)
         response.raise_for_status()
@@ -46,8 +45,6 @@ class ApiClient:
         response = self.session.post(url, headers=headers, data=data, verify=False)
         return response
 
-
-
     def user_auth(self):
         url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT.value}"
         data = {"username": Users.USER_USERNAME.value, "password": Users.USER_PASSWORD.value,
@@ -56,6 +53,11 @@ class ApiClient:
         url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT.value}"
         response = self.session.post(url, headers=headers, data=data, verify=False)
         return response
+
+    def get_user(self, headers):
+        url = f"{self.base_url}{Endpoints.USERS.value}"
+        response = self.session.get(url, headers=headers, verify=False)
+        return response.status_code
 
     def create_user(self, headers, data):
         url = f"{self.base_url}{Endpoints.USERS.value}"
