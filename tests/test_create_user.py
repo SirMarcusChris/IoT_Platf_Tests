@@ -135,3 +135,6 @@ def test_creating_user_with_same_username(api_client):  # creating an already ex
     })
     response = api_client.create_user(headers=headers, data=data)
     assert response.status_code == 500
+    
+def test_creating_user_without_admin_token(api_client):
+    headers = {}
