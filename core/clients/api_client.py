@@ -63,3 +63,8 @@ class ApiClient:
         url = f"{self.base_url}{Endpoints.USERS.value}"
         response = self.session.post(url, headers=headers, data=data, verify=False)
         return response
+    
+    def get_user_by_id(self, headers):
+        url = f"{self.base_url}{Endpoints.USERS.value}"
+        response = self.session.get(url, headers=headers, verify=False)
+        return response.status_code
