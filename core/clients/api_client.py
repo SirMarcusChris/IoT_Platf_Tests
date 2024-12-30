@@ -63,6 +63,12 @@ class ApiClient:
         url = f"{self.base_url}{Endpoints.USERS.value}"
         response = self.session.post(url, headers=headers, data=data, verify=False)
         return response
+
+
+    def create_user_222222(self, data):  # поменять название
+        url = f"{self.base_url}{Endpoints.USERS.value}"
+        response = self.session.post(url, data=data, verify=False)
+        return response
     
     def get_user_by_id(self, headers):
         url = f"{self.base_url}{Endpoints.USERS.value}"
