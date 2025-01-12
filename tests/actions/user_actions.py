@@ -60,7 +60,17 @@ def create_user(client: ApiClient, username: str):  # Сообщаем, что �
         "username": username
     })
 
-    response = client.create_user_222222(data=data)
+    response = client.create_user_without_required_headers(data=data)
     assert response.status_code == 200
     assert isinstance(response.json()['id'], str)
     assert 'id' in response.json()
+
+def get_users_list(client: ApiClient):
+    response = client.get_users()
+    assert response.status_code == 200
+    response_json = response.json()
+    assert 'data' in response_json
+    assert isinstance(response_json['data'], list)
+    # Проверяем, что в каждом элементе списка 'data' есть 'id'
+    for users in response_json['data']:
+        assert 'id' in users

@@ -54,10 +54,10 @@ class ApiClient:
         response = self.session.post(url, headers=headers, data=data, verify=False)
         return response
 
-    def get_user(self, headers):
+    def get_users(self):
         url = f"{self.base_url}{Endpoints.USERS.value}"
-        response = self.session.get(url, headers=headers, verify=False)
-        return response.status_code
+        response = self.session.get(url, verify=False)
+        return response
 
     def create_user(self, headers, data):
         url = f"{self.base_url}{Endpoints.USERS.value}"
@@ -65,7 +65,7 @@ class ApiClient:
         return response
 
 
-    def create_user_222222(self, data):  # поменять название
+    def create_user_without_required_headers(self, data):  # поменять название
         url = f"{self.base_url}{Endpoints.USERS.value}"
         response = self.session.post(url, data=data, verify=False)
         return response

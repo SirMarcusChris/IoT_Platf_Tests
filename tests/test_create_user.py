@@ -208,7 +208,7 @@ def test_getting_users_list(api_client):
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {api_client.admin_auth()}'
     }
-    response = api_client.get_user(headers=headers)
+    response = api_client.get_users(headers=headers)
     assert response == 200
 
 
@@ -219,5 +219,5 @@ def test_getting_users_by_id(get_admin_access_token):
         'Authorization': f'Bearer {get_admin_access_token}'
     }
 
-    response = client.get_user(headers=headers)
+    response = client.get_users(headers=headers)
     assert response == 200

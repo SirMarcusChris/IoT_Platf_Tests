@@ -11,7 +11,7 @@ def api_client():
     return client
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='function')  # Для получения разных типов токенов. В данном случае получается админский токен
 def get_admin_access_token():
     client = ApiClient()
     token = client.admin_auth()
