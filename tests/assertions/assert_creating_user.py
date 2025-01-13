@@ -2,12 +2,12 @@ import pytest
 import json
 import requests
 
-def assert_creating_user():
+def assert_creating_user(response):
     assert response.status_code == 200
     assert isinstance(response.json()['id'], str)
     assert 'id' in response.json()
 
-def assert_get_users_list():
+def assert_get_users_list(response):
     assert response.status_code == 200
     response_json = response.json()
     assert 'data' in response_json
