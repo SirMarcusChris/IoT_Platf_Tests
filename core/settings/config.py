@@ -11,8 +11,6 @@ class Users(Enum):
     USER_GRANT_TYPE = 'password'
 
 class GetAdminToken:
-
     def test_create_user(api_client):
-
         globals['access_token'] = api_client.admin_auth()
 

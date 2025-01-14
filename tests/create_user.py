@@ -3,7 +3,7 @@ import json
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-url = "https://10.24.64.178/api/v1"
+url = "https://10.24.64.30/api/v1"
 
 
 #авторизация под админом
