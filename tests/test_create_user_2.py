@@ -5,10 +5,7 @@ from core.clients.api_client import ApiClient
 from tests.actions.user_actions import create_user, get_users_list
 import tests.actions.user_actions
 from faker import Faker
-
 from tests.assertions.assert_creating_user import assert_get_users_list
-from tests.create_user import response
-
 
 def test_creating_user(get_admin_access_token):  # здесь пишутся только фикстуры
     faker = Faker()

@@ -37,7 +37,6 @@ class ApiClient:
         response = self.session.post(url, data=data, headers=headers, verify=False)
         response.raise_for_status()
         token = response.json()["access_token"]
-        # assert response.status_code == 200, f"Expected status code 200 but got {response.status_code}"
         return token
 
     def admin_auth_for_test(self, headers, data):
