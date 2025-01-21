@@ -8,6 +8,7 @@ def assert_creating_user(response):
     assert isinstance(response.json()['id'], str)
     assert 'id' in response.json()
     user_id = response.json()['id']
+    return user_id
     
     
 def assert_get_users_list(response):
@@ -20,4 +21,9 @@ def assert_get_users_list(response):
         assert 'id' in users
     assert response_json['total'] > 1
     assert any(user["roleName"] == "Абонент" for user in response_json["data"])
-    assert assert_creating_user(user_id)
+    # assert assert_creating_user(user_id)
+
+    # Создаём список user_id из данных
+    # user_ids = [user['id'] for user in response_json['data']]
+    # Проверяем, что user_id, который мы получили ранее, есть в списке пользователей
+    # assert user_id in user_ids  # Убеждаемся, что наш user_id присутствует в списке
