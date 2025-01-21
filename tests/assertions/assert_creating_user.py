@@ -7,7 +7,9 @@ def assert_creating_user(response):
     assert response.status_code == 200
     assert isinstance(response.json()['id'], str)
     assert 'id' in response.json()
-
+    user_id = response.json()['id']
+    
+    
 def assert_get_users_list(response):
     response_json = response.json()
     assert response.status_code == 200
@@ -18,3 +20,4 @@ def assert_get_users_list(response):
         assert 'id' in users
     assert response_json['total'] > 1
     assert any(user["roleName"] == "Абонент" for user in response_json["data"])
+    assert assert_creating_user(user_id)
