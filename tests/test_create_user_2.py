@@ -11,15 +11,20 @@ from tests.assertions.assert_creating_user import assert_get_users_list, assert_
 def test_creating_user(get_admin_access_token):  # здесь пишутся только фикстуры
     faker = Faker()
     username = faker.first_name()
-    create_user(client=get_admin_access_token, username=username)   # это вызов функции, здесь параметры для функции
-
-
-
-def test_getting_users_list(get_admin_access_token):  # в этом тесте нужно будет снова создать пользователя,
-    # тк предыдущие тесты не должны быть завязаны на создании другого теста.
+    user_id = create_user(client=get_admin_access_token, username=username)['id']# это вызов функции, здесь параметры для функции
     response = get_users_list(get_admin_access_token)
-    assert_get_users_list(response=response)
+    assert_get_users_list(response=response,user_id=user_id)
 
+
+
+
+
+
+# def test_getting_users_list(get_admin_access_token):  # в этом тесте нужно будет снова создать пользователя,
+#     # тк предыдущие тесты не должны быть завязаны на создании другого теста.
+#     response = get_users_list(get_admin_access_token)
+#     assert_get_users_list(response=response)
+#
 
 # def test_creating_user_with_same_username(api_client):  # creating an already exist user
 #     client = ApiClient()

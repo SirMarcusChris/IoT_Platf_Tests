@@ -1,8 +1,13 @@
+from http.client import responses
+
+import faker
+
 from core.clients.api_client import ApiClient
 import pytest
 import requests
+from faker import Faker
 
-#from tests.create_user import admin_token
+from tests.actions.user_actions import create_user
 
 
 @pytest.fixture(scope="function")
@@ -21,3 +26,11 @@ def get_admin_access_token():
     }
     client.session.headers = headers
     return client
+
+
+@pytest.fixture(scope='function')
+def create_user_fixture(get_admin_access_token):
+    # действия, которые создают пользователя
+    faker=Faker()
+    return create_user(client=get_admin_access_token,username=faker.first_name())['id']
+

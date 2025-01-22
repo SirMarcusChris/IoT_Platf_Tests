@@ -6,12 +6,9 @@ def assert_creating_user(response):
     response_json = response.json()
     assert response.status_code == 200
     assert isinstance(response.json()['id'], str)
-    assert 'id' in response.json()
-    user_id = response.json()['id']
-    return user_id
-    
-    
-def assert_get_users_list(response):
+
+
+def assert_get_users_list(response, user_id):
     response_json = response.json()
     assert response.status_code == 200
     assert 'data' in response_json

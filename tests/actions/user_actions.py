@@ -1,6 +1,7 @@
 import json
 
 from core.clients.api_client import ApiClient
+from tests.assertions.assert_creating_user import assert_creating_user
 
 
 def create_user(client: ApiClient, username: str):  # Сообщаем, что переменная client принимает только значения класса ApiClient
@@ -61,9 +62,8 @@ def create_user(client: ApiClient, username: str):  # Сообщаем, что �
     })
 
     response = client.create_user_without_required_headers(data=data)
-    assert response.status_code == 200
-    assert isinstance(response.json()['id'], str)
-    assert 'id' in response.json()
+    assert_creating_user(response)
+    return response.json()
 
 def get_users_list(client: ApiClient):
     response = client.get_users()
