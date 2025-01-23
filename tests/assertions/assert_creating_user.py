@@ -2,6 +2,9 @@ import pytest
 import json
 import requests
 
+from tests.conftest import create_user_fixture
+
+
 def assert_creating_user(response):
     response_json = response.json()
     assert response.status_code == 200
@@ -18,7 +21,7 @@ def assert_get_users_list(response, user_id):
         assert 'id' in users
     assert response_json['total'] > 1
     assert any(user["roleName"] == "Абонент" for user in response_json["data"])
-    # assert assert_creating_user(user_id)
+    assert user_id == 
 
     # Создаём список user_id из данных
     # user_ids = [user['id'] for user in response_json['data']]
