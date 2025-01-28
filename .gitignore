@@ -1,5 +1,5 @@
 .idea
 __pycache__
 tests/__pycache__
-.gitignore
+core/clients/__pycache__
 
