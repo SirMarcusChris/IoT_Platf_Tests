@@ -16,20 +16,3 @@ def assert_get_users_list(response, user_id):
     for user in response_json['data']:
         assert 'id' in user
     assert response_json['total'] > 1
-
-    # Проверяем наличие созданного пользователя
-    # user_ids = [user['id'] for user in response_json['data']]
-    # assert user_id in user_ids
-
-    # assert 'data' in response
-    # assert isinstance(response['data'], list)
-    # # Проверяем, что в каждом элементе списка 'data' есть 'id'
-    # for users in response.json()['data']:
-    #     assert 'id' in users
-    # assert response['total'] > 1
-    # assert any(user["roleName"] == "Абонент" for user in response["data"])
-
-    # Создаём список user_id из данных
-    # user_ids = [user['id'] for user in response_json['data']]
-    # Проверяем, что user_id, который мы получили ранее, есть в списке пользователей
-    # assert user_id in user_ids  # Убеждаемся, что наш user_id присутствует в списке
