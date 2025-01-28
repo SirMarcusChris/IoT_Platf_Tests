@@ -10,6 +10,17 @@ def assert_creating_user(response):
 
 def assert_get_users_list(response, user_id):
     assert response.status_code == 200
+    response_json = response.json()  # Преобразуем в JSON
+    assert 'data' in response_json  # Работаем с JSON
+    assert isinstance(response_json['data'], list)
+    for user in response_json['data']:
+        assert 'id' in user
+    assert response_json['total'] > 1
+
+    # Проверяем наличие созданного пользователя
+    # user_ids = [user['id'] for user in response_json['data']]
+    # assert user_id in user_ids
+
     # assert 'data' in response
     # assert isinstance(response['data'], list)
     # # Проверяем, что в каждом элементе списка 'data' есть 'id'
