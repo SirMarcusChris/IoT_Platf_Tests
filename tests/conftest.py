@@ -7,7 +7,7 @@ import pytest
 import requests
 from faker import Faker
 
-from tests.actions.user_actions import create_user
+from tests.actions.create_user_actions import create_user
 
 
 @pytest.fixture(scope="function")
@@ -17,7 +17,7 @@ def api_client():
 
 
 @pytest.fixture(scope='function')  # Для получения разных типов токенов. В данном случае получается админский токен
-def get_admin_access_token():
+def   get_admin_access_token():
     client = ApiClient()
     token = client.admin_auth()
     headers = {
