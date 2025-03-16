@@ -2,10 +2,10 @@ import pytest
 import json
 import requests
 from core.clients.api_client import ApiClient
-from tests.actions.user_actions import create_user, get_users_list
+from tests.actions.user_actions import create_user, get_users_list, delete_user
 import tests.actions.user_actions
 from faker import Faker
-from tests.assertions.assert_creating_user import assert_get_users_list, assert_creating_user
+from tests.assertions.assert_creating_user import assert_get_users_list, assert_creating_user, assert_user_deleted
 
 
 def test_creating_user(get_admin_access_token):  # здесь пишутся только фикстуры
@@ -146,3 +146,8 @@ def test_getting_users_by_id(api_client):
 
     response = client.get_users(headers=headers)
     assert response == 200
+
+@pytest.mark.usefixtures("get_admin_access_token")
+def test_delete_user(get_admin_access_token):
+    # Удаляем пользователя (проверки уже в assertions)
+    delete_user(get_admin_access_token)
