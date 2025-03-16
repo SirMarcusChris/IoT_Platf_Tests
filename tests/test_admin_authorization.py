@@ -41,7 +41,7 @@ def test_authorization_with_bad_login_password(api_client):
     headers = {
         'Authorization': 'Basic YXBpLWNsaWVudDpwYXNzd29yZA=='
     }
-    data = open('/core/clients/data_validate/admin_authorization_data.json')
+    data = open('/Users/admin/PycharmProjects/IoT_Platf_Tests/core/clients/data_validate/admin_authorization_data.json')
     response = api_client.admin_auth_for_test(headers=headers, data=data)
     assert response.status_code == 400
 

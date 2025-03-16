@@ -16,3 +16,5 @@ def assert_get_users_list(response, user_id):
     for user in response_json['data']:
         assert 'id' in user
     assert response_json['total'] > 1
+
+

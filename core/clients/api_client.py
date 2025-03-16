@@ -1,3 +1,5 @@
+from http.client import responses
+
 import requests
 import os
 from dotenv import load_dotenv
@@ -72,4 +74,9 @@ class ApiClient:
     def get_user_by_id(self, headers):
         url = f"{self.base_url}{Endpoints.USERS.value}"
         response = self.session.get(url, headers=headers, verify=False)
+        return response.status_code
+
+    def delete_user_by_id(self, headers):
+        url = f"{self.base_url}{Endpoints.USERS.value}"
+        response = self.session.delete(url, headers=headers, verify=False)
         return response.status_code

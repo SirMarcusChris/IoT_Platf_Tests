@@ -18,73 +18,62 @@ def test_creating_user(get_admin_access_token):  # здесь пишутся т�
 
 def test_getting_users_list(get_admin_access_token):  # в этом тесте нужно будет снова создать пользователя,
     # тк предыдущие тесты не должны быть завязаны на создании другого теста.
+    # Создаем нового пользователя
+    user_data = create_user(get_admin_access_token, "TestUser")
+    user_id = user_data["id"]  # Получаем его ID
     response = get_users_list(get_admin_access_token)
-    assert_get_users_list(response=response)
+    assert_get_users_list(response=response,user_id=user_id)
 
 
-def test_creating_user_with_same_username(api_client):  # creating an already exist user
-    client = ApiClient()
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {api_client.admin_auth()}'
-    }
-    data = json.dumps({
+@pytest.mark.usefixtures("get_admin_access_token")
+def test_creating_user_with_same_username(get_admin_access_token, create_user_fixture):
+    user_id = create_user_fixture  # Фикстура возвращает user_id
+
+    # Получаем данные пользователя, чтобы узнать его username
+    headers = get_admin_access_token.session.headers
+    response = get_admin_access_token.get_users(headers=headers)
+    assert response.status_code == 200, f"Ошибка при получении пользователей: {response.text}"
+
+    users = response.json().get("data", [])  # API может возвращать список пользователей в поле 'data'
+    user = next((u for u in users if u["id"] == user_id), None)
+    assert user, f"Не найден пользователь с id {user_id}"
+
+    username = user["username"]  # Теперь у нас есть username
+
+    # Пытаемся создать второго пользователя с тем же username
+    duplicate_user_data = json.dumps({
         "access": {},
         "accessMap": {},
         "additionalAccounts": {},
-        "additionalEmail": [
-            "string"
-        ],
+        "additionalEmail": ["test@example.com"],
         "admin": False,
         "dashboardItems": [],
-        "email": "",
+        "email": "test@example.com",
         "emailConfirm": False,
         "enabled": True,
         "houseIds": [],
         "houseIdsWithRefuser": [],
         "id": "",
         "language": "ru",
-        "name": "",
-        "password": "123",
-        "patronymic": "",
-        "permissions": [
-            "view.dashboard",
-            "view.houses",
-            "view.scripts",
-            "view.devices",
-            "view.meters",
-            "view.events",
-            "view.settings",
-            "view.calculation",
-            "view.cameras",
-            "view.plans",
-            "needAllMeasures",
-            "needHeaderVariablesEditor",
-            "needReportByAddresses",
-            "minimizeDeviceInfoIfCharts",
-            "needPersonalInformation",
-            "computeDefaultPage",
-            "camera_w",
-            "controller_w",
-            "device_w",
-            "house_w",
-            "script_w"
-        ],
-        "phone": "",
+        "name": "Test User",
+        "password": "123456",
+        "patronymic": "Test",
+        "permissions": ["view.dashboard"],
+        "phone": "1234567890",
         "phoneConfirm": False,
         "platforms": [],
         "role": "user",
         "roleId": "user",
         "roleName": "Абонент",
-        "roleSettings": {
-            "defaultPage": "view.dashboard"
-        },
+        "roleSettings": {"defaultPage": "view.dashboard"},
         "status": "DEFAULT",
-        "surname": "",
-        "username": "ssss2s22"
+        "surname": "Testov",
+        "username": username  # Используем тот же username
     })
-    response = client.create_user(headers=headers, data=data)
-    assert response.status_code == 500
+
+    response = get_admin_access_token.create_user(headers=headers, data=duplicate_user_data)
+
+    assert response.status_code == 400, f"Ожидался код ошибки 400 при создании по"
 
 
 def test_creating_user_without_admin_token(api_client):
