@@ -4,6 +4,8 @@ from core.clients.api_client import ApiClient
 from tests.assertions.assert_creating_user import assert_creating_user
 
 
+
+
 def create_user(client: ApiClient, username: str):  # Сообщаем, что переменная client принимает только значения класса ApiClient
     data = json.dumps({
         "access": {},
