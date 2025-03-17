@@ -2,7 +2,7 @@ import pytest
 import json
 import requests
 from core.clients.api_client import ApiClient
-from tests.actions.user_actions import create_user, get_users_list, delete_user
+from tests.actions.user_actions import create_user, get_users_list, delete_user, create_duplicate_user
 import tests.actions.user_actions
 from faker import Faker
 from tests.assertions.assert_creating_user import assert_get_users_list, assert_creating_user, assert_user_deleted
@@ -28,53 +28,16 @@ def test_getting_users_list(get_admin_access_token):  # в этом тесте �
 @pytest.mark.usefixtures("get_admin_access_token")
 def test_creating_user_with_same_username(get_admin_access_token, create_user_fixture):
     user_id = create_user_fixture  # Фикстура возвращает user_id
-
     # Получаем данные пользователя, чтобы узнать его username
-    headers = get_admin_access_token.session.headers
-    response = get_admin_access_token.get_users(headers=headers)
+    response = get_admin_access_token.get_users()
     assert response.status_code == 200, f"Ошибка при получении пользователей: {response.text}"
-
-    users = response.json().get("data", [])  # API может возвращать список пользователей в поле 'data'
+    users = response.json().get("data", [])
     user = next((u for u in users if u["id"] == user_id), None)
     assert user, f"Не найден пользователь с id {user_id}"
-
     username = user["username"]  # Теперь у нас есть username
-
     # Пытаемся создать второго пользователя с тем же username
-    duplicate_user_data = json.dumps({
-        "access": {},
-        "accessMap": {},
-        "additionalAccounts": {},
-        "additionalEmail": ["test@example.com"],
-        "admin": False,
-        "dashboardItems": [],
-        "email": "test@example.com",
-        "emailConfirm": False,
-        "enabled": True,
-        "houseIds": [],
-        "houseIdsWithRefuser": [],
-        "id": "",
-        "language": "ru",
-        "name": "Test User",
-        "password": "123456",
-        "patronymic": "Test",
-        "permissions": ["view.dashboard"],
-        "phone": "1234567890",
-        "phoneConfirm": False,
-        "platforms": [],
-        "role": "user",
-        "roleId": "user",
-        "roleName": "Абонент",
-        "roleSettings": {"defaultPage": "view.dashboard"},
-        "status": "DEFAULT",
-        "surname": "Testov",
-        "username": username  # Используем тот же username
-    })
-
-    response = get_admin_access_token.create_user(headers=headers, data=duplicate_user_data)
-
-    assert response.status_code == 400, f"Ожидался код ошибки 400 при создании по"
-
+    response = create_duplicate_user(get_admin_access_token, username)
+    assert response.status_code == 400, f"Ожидался код ошибки 400 при создании пользователя с уже существующим username, но получили {response.status_code}. Response: {response.text}"
 
 def test_creating_user_without_admin_token(api_client):
     headers = {}
