@@ -11,7 +11,7 @@ from tests.assertions.assert_creating_user import  assert_get_users_list, assert
 def test_creating_user(get_admin_access_token):  # здесь пишутся только фикстуры
     faker = Faker()
     username = faker.first_name()
-    user_id = create_user(client=get_admin_access_token, username=username)['id']  # это вызов функции, здесь параметры для функции
+    create_user(client=get_admin_access_token, username=username)
 
 
 # def test_getting_users_list(get_admin_access_token):  # в этом тесте нужно будет снова создать пользователя,

@@ -69,7 +69,7 @@ def create_user_data(client: ApiClient, username: str):  # Сообщаем, ч�
 
 def create_user(client: ApiClient, username: str):
     """Создает пользователя и возвращает его данные"""
-    data = create_user_data(client, username)  #  Теперь передаем username в функцию
+    data = create_user_data(client, username)  # Теперь передаем username в функцию
     response = client.create_user(headers=client.session.headers, data=data)
     return response
 
