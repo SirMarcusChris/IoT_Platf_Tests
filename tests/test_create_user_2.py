@@ -15,6 +15,12 @@ def test_creating_user(get_admin_access_token):  # здесь пишутся т�
     response = get_admin_access_token.get_users()  # Получаем список пользователей
     assert_get_users_list(response=response, user_id=user_id)  # Передаем response и user_id
 
+def test_delete_user(get_admin_access_token):
+    faker = Faker()
+    username = faker.first_name()
+    user_id = create_user(client=get_admin_access_token, username=username)  # это вызов функции, здесь параметры для функции
+    response = get_admin_access_token.get_users()  # Получаем список пользователей
+    assert_get_users_list(response=response, user_id=user_id)  #  Проверили что пользователь был создан
 
 
 
