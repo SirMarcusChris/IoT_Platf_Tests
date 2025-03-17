@@ -12,9 +12,8 @@ def test_creating_user(get_admin_access_token):  # здесь пишутся т�
     faker = Faker()
     username = faker.first_name()
     user_id = create_user(client=get_admin_access_token, username=username)['id']  # это вызов функции, здесь параметры для функции
-    response = assert_get_users_list(get_admin_access_token)
-    assert_get_users_list(response=response,user_id=user_id)
-
+    response = get_admin_access_token.get_users()  # Получаем список пользователей
+    assert_get_users_list(response=response, user_id=user_id)  # Передаем response и user_id
 
 # def test_getting_users_list(get_admin_access_token):  # в этом тесте нужно будет снова создать пользователя,
 #     # тк предыдущие тесты не должны быть завязаны на создании другого теста.
