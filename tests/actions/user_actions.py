@@ -66,12 +66,75 @@ def create_user_data(client: ApiClient, username: str):  # Сообщаем, ч�
     # # assert_creating_user(response)
     # return response.json()
 
+def create_user(client: ApiClient, username: str):  # Сообщаем, что переменная client принимает только значения класса ApiClient
+    data = json.dumps({
+        "access": {},
+        "accessMap": {},
+        "additionalAccounts": {},
+        "additionalEmail": [
+            "string"
+        ],
+        "admin": False,
+        "dashboardItems": [],
+        "email": "",
+        "emailConfirm": False,
+        "enabled": True,
+        "houseIds": [],
+        "houseIdsWithRefuser": [],
+        "id": "",
+        "language": "ru",
+        "name": "",
+        "password": "123",
+        "patronymic": "",
+        "permissions": [
+            "view.dashboard",
+            "view.houses",
+            "view.scripts",
+            "view.devices",
+            "view.meters",
+            "view.events",
+            "view.settings",
+            "view.calculation",
+            "view.cameras",
+            "view.plans",
+            "needAllMeasures",
+            "needHeaderVariablesEditor",
+            "needReportByAddresses",
+            "minimizeDeviceInfoIfCharts",
+            "needPersonalInformation",
+            "computeDefaultPage",
+            "camera_w",
+            "controller_w",
+            "device_w",
+            "house_w",
+            "script_w"
+        ],
+        "phone": "",
+        "phoneConfirm": False,
+        "platforms": [],
+        "role": "user",
+        "roleId": "user",
+        "roleName": "Абонент",
+        "roleSettings": {
+            "defaultPage": "view.dashboard"
+        },
+        "status": "DEFAULT",
+        "surname": "",
+        "username": username
+    })
 
-def create_user(client: ApiClient, username: str):
-    """Создает пользователя и возвращает его данные"""
-    data = create_user_data(client, username)  # Теперь передаем username в функцию
-    response = client.create_user(headers=client.session.headers, data=data)
-    return response
+    response = client.create_user_without_required_headers(data=data)
+    assert_creating_user(response)
+    return response.json()
+
+
+
+
+# def create_user(client: ApiClient, username: str):
+#     """Создает пользователя и возвращает его данные"""
+#     data = create_user_data(client, username)  # Теперь передаем username в функцию
+#     response = client.create_user(headers=client.session.headers, data=data)
+#     return response.json()
 
 # def create_duplicate_user(client: ApiClient, username: str):
 #     """Пытается создать пользователя с уже существующим username"""
