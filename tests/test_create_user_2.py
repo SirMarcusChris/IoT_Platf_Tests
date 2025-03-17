@@ -2,27 +2,31 @@ import pytest
 import json
 import requests
 from core.clients.api_client import ApiClient
-from tests.actions.user_actions import create_user, get_users_list, delete_user, create_duplicate_user
+from tests.actions.user_actions import create_user, get_users_list, delete_user, create_duplicate_user, create_user_data
 import tests.actions.user_actions
 from faker import Faker
-from tests.assertions.assert_creating_user import assert_get_users_list, assert_creating_user, assert_user_deleted
+from tests.assertions.assert_creating_user import  assert_get_users_list, assert_creating_user, assert_user_deleted, assert_user_creation_failed
 
 
 def test_creating_user(get_admin_access_token):  # здесь пишутся только фикстуры
     faker = Faker()
     username = faker.first_name()
-    # user_id = create_user(client=get_admin_access_token, username=username)['id']# это вызов функции, здесь параметры для функции
+    user_id = create_user(client=get_admin_access_token, username=username)['id']  # это вызов функции, здесь параметры для функции
     # response = get_users_list(get_admin_access_token)
-    # assert_get_users_list(response=response,user_id=user_id)
+    # assert_get_users_list(response=response, user_id=user_id)
 
 
 def test_getting_users_list(get_admin_access_token):  # в этом тесте нужно будет снова создать пользователя,
     # тк предыдущие тесты не должны быть завязаны на создании другого теста.
     # Создаем нового пользователя
-    user_data = create_user(get_admin_access_token, "TestUser")
+    user_data = create_user_data(get_admin_access_token, "TestUser")
     user_id = user_data["id"]  # Получаем его ID
     response = get_users_list(get_admin_access_token)
     assert_get_users_list(response=response,user_id=user_id)
+
+def test_creating_user_without_admin_token(api_client):
+    response = create_user_without_token(api_client)
+    assert_user_creation_failed(response)
 
 
 @pytest.mark.usefixtures("get_admin_access_token")

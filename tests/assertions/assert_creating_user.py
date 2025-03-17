@@ -32,3 +32,8 @@ def assert_user_deleted(response, user_id, users_list):
     # Проверяем, что user_id больше нет в списке пользователей
     user_exists = any(u["id"] == user_id for u in users_list)
     assert not user_exists, f"Пользователь с id {user_id} не был удален!"
+
+
+def assert_user_creation_failed(response):
+    """Проверяет, что создание пользователя без токена не выполняется"""
+    assert response.status_code == 401, f"Ожидался код 401, но получили {response.status_code}. Response: {response.text}"
