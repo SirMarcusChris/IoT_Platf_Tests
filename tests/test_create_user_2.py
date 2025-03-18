@@ -22,9 +22,10 @@ def test_delete_user(get_admin_access_token):
     username = faker.first_name()
     user_data = create_user(client=get_admin_access_token, username=username)
     user_id = user_data["id"]
-
+    response = get_users_list(get_admin_access_token)
+    assert_get_users_list(response=response, user_id=user_id)
     """Удаляем пользователя"""
-    delete_response = get_admin_access_token.delete_user(headers=get_admin_access_token.session.headers, user_id=user_id)
+    delete_response = get_admin_access_token.delete_user_by_id(user_id=user_id)
 
     """Проверяем, что код ответа равен 204"""
     assert delete_response == 204, f"Ожидался код 204, но получили {delete_response}"

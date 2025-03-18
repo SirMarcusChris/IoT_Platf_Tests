@@ -77,6 +77,6 @@ class ApiClient:
         return response.status_code
 
     def delete_user_by_id(self, user_id):
-        url = f"{self.base_url}{Endpoints.USERS.value}{user_id}"
+        url = f"{self.base_url}{Endpoints.USERS.value}/{user_id}"
         response = self.session.delete(url, verify=False)
         return response.status_code
