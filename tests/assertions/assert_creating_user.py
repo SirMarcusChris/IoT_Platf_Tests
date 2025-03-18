@@ -19,21 +19,13 @@ def assert_get_users_list(response, user_id):
     assert response_json['total'] > 1
 
 
-def assert_user_created(response):
-    """Проверяет, что пользователь успешно создан"""
-    response_json = response.json()
-    assert response.status_code == 200, f"Ошибка создания пользователя: {response.text}"
-    assert "id" in response_json, "В ответе отсутствует ID пользователя"
-
-
-def assert_user_deleted(response, user_id, users_list):
-    """Проверяет, что пользователь успешно удален (код 204)"""
-    assert response.status_code == 204, f"Ожидался код 204, но получили {response.status_code}: {response.text}"
-    # Проверяем, что user_id больше нет в списке пользователей
-    user_exists = any(u["id"] == user_id for u in users_list)
-    assert not user_exists, f"Пользователь с id {user_id} не был удален!"
-
-
-def assert_user_creation_failed(response):
-    """Проверяет, что создание пользователя без токена не выполняется"""
-    assert response.status_code == 401, f"Ожидался код 401, но получили {response.status_code}. Response: {response.text}"
+# def assert_user_created(response):
+#     """Проверяет, что пользователь успешно создан"""
+#     response_json = response.json()
+#     assert response.status_code == 200, f"Ошибка создания пользователя: {response.text}"
+#     assert "id" in response_json, "В ответе отсутствует ID пользователя"
+#
+#
+# def assert_user_creation_failed(response):
+#     """Проверяет, что создание пользователя без токена не выполняется"""
+#     assert response.status_code == 401, f"Ожидался код 401, но получили {response.status_code}. Response: {response.text}"

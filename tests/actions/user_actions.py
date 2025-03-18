@@ -128,6 +128,9 @@ def create_user(client: ApiClient, username: str):  # Сообщаем, что �
     return response.json()
 
 
+def delete_user(client: ApiClient):
+    response = client.delete_user_by_id()
+
 
 # def create_user(client: ApiClient, username: str):
 #     """Создает пользователя и возвращает его данные"""
