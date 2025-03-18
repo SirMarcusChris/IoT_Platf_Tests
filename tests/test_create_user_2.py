@@ -2,7 +2,7 @@ import pytest
 import json
 import requests
 from core.clients.api_client import ApiClient
-from tests.actions.create_user_actions import create_user, get_users_list
+from tests.actions.create_user_actions import create_user, get_users_list, delete_user
 import tests.actions.create_user_actions
 from faker import Faker
 from tests.assertions.assert_creating_user import assert_get_users_list, assert_creating_user
@@ -17,24 +17,22 @@ def test_creating_user(get_admin_access_token):  # здесь пишутся т�
 
 
 def test_delete_user(get_admin_access_token):
-    # Шаг 1: Создаем пользователя и записываем его id
+    """Создаем пользователя и записываем его id"""
     faker = Faker()
     username = faker.first_name()
     user_data = create_user(client=get_admin_access_token, username=username)
     user_id = user_data["id"]
 
-    # Шаг 2: Удаляем пользователя
-    delete_response = get_admin_access_token.delete_user_by_id(headers=get_admin_access_token.session.headers, user_id=user_id)
+    """Удаляем пользователя"""
+    delete_response = get_admin_access_token.delete_user(headers=get_admin_access_token.session.headers, user_id=user_id)
 
-    # Шаг 3: Проверяем, что код ответа равен 204
+    """Проверяем, что код ответа равен 204"""
     assert delete_response == 204, f"Ожидался код 204, но получили {delete_response}"
-
-    # Шаг 4: Получаем список пользователей и проверяем, что удаленный пользователь отсутствует
+    """Получаем список пользователей и проверяем, что удаленный пользователь отсутствует"""
     users_list_response = get_admin_access_token.get_users()
     assert users_list_response.status_code == 200, f"Ошибка при получении списка пользователей: {users_list_response.text}"
     users_list = users_list_response.json().get("data", [])
-
-    # Проверяем, что пользователь удален
+    """Проверяем, что пользователь удален"""
     # assert_user_deleted(delete_response, user_id, users_list)
 
 
