@@ -68,3 +68,6 @@ def create_user(client: ApiClient, username: str):  # Сообщаем, что �
 def get_users_list(client: ApiClient):
     response = client.get_users()
     return response
+
+def delete_user(client: ApiClient, username: str):
+    response = client.delete_user_by_id()
