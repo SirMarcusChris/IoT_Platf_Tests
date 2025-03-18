@@ -2,8 +2,8 @@ import pytest
 import json
 import requests
 from core.clients.api_client import ApiClient
-from tests.actions.user_actions import create_user, get_users_list
-import tests.actions.user_actions
+from tests.actions.create_user_actions import create_user, get_users_list
+import tests.actions.create_user_actions
 from faker import Faker
 from tests.assertions.assert_creating_user import assert_get_users_list, assert_creating_user
 
