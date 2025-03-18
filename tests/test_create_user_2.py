@@ -34,8 +34,7 @@ def test_delete_user(get_admin_access_token):
     assert users_list_response.status_code == 200, f"Ошибка при получении списка пользователей: {users_list_response.text}"
     users_list = users_list_response.json().get("data", [])
     """Проверяем, что пользователь удален"""
-    # assert_user_deleted(delete_response, user_id, users_list)
-
+    assert delete_user()
 
 
 # def test_getting_users_list(get_admin_access_token):  # в этом тесте нужно будет снова создать пользователя,

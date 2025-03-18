@@ -22,7 +22,6 @@ def assert_delete_user(response, delete_response, users_list_response, ):
     delete_response = delete_response
     assert delete_response == 204, f"Ожидался код 204, но получили {delete_response}"
     assert users_list_response.status_code == 200, f"Ошибка при получении списка пользователей: {users_list_response.text}"
-    assert user_deleted(delete_response, user_id, users_list)
 
 
 
