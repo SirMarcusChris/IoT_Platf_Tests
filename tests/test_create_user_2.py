@@ -5,7 +5,7 @@ from core.clients.api_client import ApiClient
 from tests.actions.create_user_actions import create_user, get_users_list, delete_user
 import tests.actions.create_user_actions
 from faker import Faker
-from tests.assertions.assert_creating_user import assert_get_users_list, assert_creating_user
+from tests.assertions.assert_creating_user import assert_get_users_list, assert_creating_user, assert_delete_user,  assert_delete_user
 
 
 def test_creating_user(get_admin_access_token):  # здесь пишутся только фикстуры
@@ -24,17 +24,16 @@ def test_delete_user(get_admin_access_token):
     user_id = user_data["id"]
     response = get_users_list(get_admin_access_token)
     assert_get_users_list(response=response, user_id=user_id)
+    
     """Удаляем пользователя"""
-    delete_response = get_admin_access_token.delete_user_by_id(user_id=user_id)
-
-    """Проверяем, что код ответа равен 204"""
-    assert delete_response == 204, f"Ожидался код 204, но получили {delete_response}"
-    """Получаем список пользователей и проверяем, что удаленный пользователь отсутствует"""
+    delete_response = delete_user(client=get_admin_access_token, user_id=user_id)
     users_list_response = get_admin_access_token.get_users()
+    """Проверяем, что код ответа равен 204"""
+    assert_delete_user(response=response, delete_response=delete_response, users_list_response=users_list_response)
+    """Получаем список пользователей и проверяем, что удаленный пользователь отсутствует"""
     assert users_list_response.status_code == 200, f"Ошибка при получении списка пользователей: {users_list_response.text}"
     users_list = users_list_response.json().get("data", [])
     """Проверяем, что пользователь удален"""
-    assert delete_user()
 
 
 # def test_getting_users_list(get_admin_access_token):  # в этом тесте нужно будет снова создать пользователя,

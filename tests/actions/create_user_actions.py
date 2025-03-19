@@ -69,5 +69,6 @@ def get_users_list(client: ApiClient):
     response = client.get_users()
     return response
 
-def delete_user(client: ApiClient, username: str):
-    response = client.delete_user_by_id()
+def delete_user(client: ApiClient, user_id: str):
+    delete_response = client.delete_user_by_id(user_id=user_id)
+    return delete_response
