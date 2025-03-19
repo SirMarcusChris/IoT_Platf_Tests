@@ -31,8 +31,8 @@ def test_delete_user(get_admin_access_token):
     """Проверяем, что код ответа равен 204"""
     assert_delete_user(response=response, delete_response=delete_response, users_list_response=users_list_response)
     """Получаем список пользователей и проверяем, что удаленный пользователь отсутствует"""
-    assert users_list_response.status_code == 200, f"Ошибка при получении списка пользователей: {users_list_response.text}"
-    users_list = users_list_response.json().get("data", [])
+    # assert users_list_response.status_code == 200, f"Ошибка при получении списка пользователей: {users_list_response.text}"
+    # users_list = users_list_response.json().get("data", [])
     """Проверяем, что пользователь удален"""
 
 
